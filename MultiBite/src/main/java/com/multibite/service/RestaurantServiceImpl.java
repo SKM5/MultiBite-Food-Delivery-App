@@ -13,6 +13,7 @@ import com.multibite.exception.RestaurantException;
 import com.multibite.model.Address;
 import com.multibite.model.CurrentUserSession;
 import com.multibite.model.Item;
+import com.multibite.model.ItemDTO;
 import com.multibite.model.Restaurant;
 import com.multibite.repository.AddressRepo;
 import com.multibite.repository.CurrentUserSessionRepo;
@@ -43,8 +44,8 @@ public class RestaurantServiceImpl implements RestaurantService {
 			Address address = restaurant.getAddress();
 			address.getRestaurantList().add(restaurant);
 
-			List<Item> itemList = restaurant.getItemList();
-			for (Item ele : itemList) {
+			List<ItemDTO> itemList = restaurant.getItemList();
+			for (ItemDTO ele : itemList) {
 				ele.getRestaurants().add(restaurant);
 			}
 			return resRepo.save(restaurant);
@@ -59,8 +60,8 @@ public class RestaurantServiceImpl implements RestaurantService {
 		CurrentUserSession currSess = currSession.findByPrivateKey(key);
 		if (currSess != null && currSess.getRole().equalsIgnoreCase("admin")) {
 
-			Optional<Restaurant> opt = resRepo.findById(restaurant.getRestaurantId());
-			if (opt.isPresent()) {
+			Restaurant res = resRepo.findByRestaurantId(restaurant.getRestaurantId());
+			if (res != null) {
 				return resRepo.save(restaurant);
 			} else {
 				throw new RestaurantException("Restaurant id not found!");
@@ -76,9 +77,9 @@ public class RestaurantServiceImpl implements RestaurantService {
 		CurrentUserSession currSess = currSession.findByPrivateKey(key);
 		if (currSess != null && currSess.getRole().equalsIgnoreCase("admin")) {
 
-			Optional<Restaurant> opt = resRepo.findById(restaurantId);
-			if (opt.isPresent()) {
-				Restaurant restaurant = opt.get();
+			Restaurant res = resRepo.findByRestaurantId(restaurantId);
+			if (res != null ) {
+				Restaurant restaurant = res;
 				resRepo.delete(restaurant);
 				return restaurant;
 			} else {
@@ -96,9 +97,9 @@ public class RestaurantServiceImpl implements RestaurantService {
 		if (currSess == null)
 			throw new LoginException("Login required");
 
-		Optional<Restaurant> opt = resRepo.findById(restaurantId);
-		if (opt.isPresent()) {
-			Restaurant restaurant = opt.get();
+		Restaurant res = resRepo.findByRestaurantId(restaurantId);
+		if (res != null) {
+			Restaurant restaurant = res;
 			return restaurant;
 		} else {
 			throw new RestaurantException("Restaurant id not found!");

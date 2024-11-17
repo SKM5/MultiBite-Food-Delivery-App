@@ -7,4 +7,12 @@ public interface AdminService {
 
 	public String createNewAdmin() throws AdminException;
 
+	public String createUser(String userType, Object user) throws AdminException;
+
+	public String updateUser(String userType, Object user) throws AdminException;
+
+	public String deactivateUser(String userType, Object user) throws AdminException;
+	
+
+
 }

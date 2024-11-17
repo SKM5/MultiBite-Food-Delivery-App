@@ -22,6 +22,7 @@ import com.multibite.exception.LoginException;
 import com.multibite.exception.RestaurantException;
 import com.multibite.model.Customer;
 import com.multibite.model.Restaurant;
+import com.multibite.model.RestaurantMenu;
 import com.multibite.service.AddressService;
 import com.multibite.service.RestaurantService;
 
@@ -81,5 +82,18 @@ public class RestaurantController {
 		List<Restaurant> restaurantList = resService.viewRestaurantByItemName(key, item);
 		return new ResponseEntity<List<Restaurant>>(restaurantList, HttpStatus.OK);
 	}
+	
+	@GetMapping("/getRestMenu/{restaurantId}")
+    public ResponseEntity<RestaurantMenu> getRestaurantMenu(@RequestParam String key, @RequestParam Integer restaurantId) throws RestaurantException, LoginException
+    {    	
+    	 try {    		 
+    		 RestaurantMenu restaurantMenu = resService.viewRestaurantById(key, restaurantId).getRestaurantMenu();
+    		   return new ResponseEntity<RestaurantMenu>(restaurantMenu, HttpStatus.ACCEPTED);
+ 		} catch (LoginException | RestaurantException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+		return null;				  
+    }
 
 }

@@ -8,4 +8,6 @@ import com.multibite.model.Restaurant;
 @Repository
 public interface RestaurantRepo extends JpaRepository<Restaurant, Integer> {
 
+	public Restaurant findByRestaurantId(Integer restaurantId);
+	public Restaurant findByRestaurantName(String name);
 }

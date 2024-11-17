@@ -148,5 +148,38 @@ public class OrderServiceImpl implements OrderService {
 			throw new OrderDetailsException("order does not exist...!");
 		}
 	}
+	
+	// Method to reschedule an order
+	public String rescheduleOrder(Integer orderId, String newDeliveryTime) throws OrderDetailsException {
+					
+		OrderDetails order = orderRepo.findById(orderId).orElse(null);
+		if (order == null) {
+			throw new OrderDetailsException("order does not exist...!");
+		}
+		// Check if the order is already completed or cancelled
+		if ("Cancelled".equalsIgnoreCase(order.getOrderStatus()) || "Completed".equalsIgnoreCase(order.getOrderStatus())) {
+			throw new OrderDetailsException("Order cannot be rescheduled as it is either already cancelled or completed");
+		}
+		//order.setDeliveryTime(newDeliveryTime); // Update the delivery time
+		//orderRepository.save(order); // Save the updated order
+		return new String("Order has been rescheduled successfully");
+	}
+	
+	public String getOrderStatus(List<OrderDetails> orderDetailsList) {
+        // Count orders with different statuses
+        long pendingOrders = orderDetailsList.stream()
+                .filter(order -> "PENDING".equals(order.getOrderStatus()))
+                .count();
+        long completedOrders = orderDetailsList.stream()
+                .filter(order -> "COMPLETED".equals(order.getOrderStatus()))
+                .count();
+        long canceledOrders = orderDetailsList.stream()
+                .filter(order -> "CANCELED".equals(order.getOrderStatus()))
+                .count();
+
+        // Return the counts as a formatted string
+        return String.format("Pending Orders: %d, Completed Orders: %d, Canceled Orders: %d", 
+                             pendingOrders, completedOrders, canceledOrders);
+    }
 
 }

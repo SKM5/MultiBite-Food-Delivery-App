@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
@@ -53,5 +55,14 @@ public class OrderDetails {
 	@OneToOne(targetEntity=FoodCart.class)
 	private FoodCart foodCart;
 	private String orderStatus;
+	
+	@ManyToOne
+    @JoinColumn(name = "restaurant_id") // Foreign key column in OrderDetails table
+    private Restaurant restaurant;
+
+	public void rescheduleOrder(Integer orderId2, String newDeliveryTime) {
+		// TODO Auto-generated method stub
+		
+	} 
 
 }

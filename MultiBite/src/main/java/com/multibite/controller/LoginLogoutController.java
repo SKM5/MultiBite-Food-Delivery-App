@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.multibite.exception.LoginException;
+import com.multibite.exception.RestaurantOwnerException;
 import com.multibite.model.LoginDTO;
 import com.multibite.service.LoginService;
 
@@ -21,7 +22,7 @@ public class LoginLogoutController {
 	private LoginService loginService;
 
 	@PostMapping("/login")
-	public ResponseEntity<String> logIn(@RequestBody LoginDTO loginDTO) throws LoginException {
+	public ResponseEntity<String> logIn(@RequestBody LoginDTO loginDTO) throws LoginException, RestaurantOwnerException {
 		String result = loginService.loginAccount(loginDTO);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}

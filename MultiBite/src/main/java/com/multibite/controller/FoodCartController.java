@@ -53,7 +53,7 @@ public class FoodCartController {
 		return new ResponseEntity<FoodCart>(foodCart, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/item")
+	@DeleteMapping("/removeItem")
 	public ResponseEntity<FoodCart> removeItemHandler(@RequestParam(required = false) String key,
 			@RequestParam Integer cartId, @RequestParam Integer itemId)
 			throws ItemException, CustomerException, FoodCartException, LoginException {

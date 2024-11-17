@@ -7,5 +7,8 @@ import com.multibite.model.OrderDetails;
 
 @Repository
 public interface OrderDetailsRepo extends JpaRepository<OrderDetails, Integer> {
+	
+	public OrderDetails findByOrderId(Integer orderId);	
+	public OrderDetails save(String orderStatus);
 
 }

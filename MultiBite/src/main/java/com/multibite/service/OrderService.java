@@ -1,5 +1,7 @@
 package com.multibite.service;
 
+import java.util.List;
+
 import com.multibite.exception.CustomerException;
 import com.multibite.exception.FoodCartException;
 import com.multibite.exception.LoginException;
@@ -17,5 +19,9 @@ public interface OrderService {
 	public OrderDetails removeOrder(String key, Integer orderId) throws OrderDetailsException, LoginException;
 
 	public OrderDetails viewOrder(String key, Integer orderId) throws OrderDetailsException, LoginException;
+
+	public String rescheduleOrder(Integer orderId, String newDeliveryTime) throws OrderDetailsException;
+	
+	public String getOrderStatus(List<OrderDetails> orderDetailsList);
 
 }
